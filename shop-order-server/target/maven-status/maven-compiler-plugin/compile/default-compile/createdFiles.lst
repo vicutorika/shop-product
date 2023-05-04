@@ -1,0 +1,6 @@
+cn\wolfocde\controller\OrderController.class
+cn\wolfocde\feign\IProductFeginService.class
+cn\wolfocde\mapper\OrderMapper.class
+cn\wolfocde\OrderServer.class
+cn\wolfocde\service\IOrderService.class
+cn\wolfocde\service\impl\OrderServiceImpl.class

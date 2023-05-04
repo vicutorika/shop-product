@@ -1,0 +1,36 @@
+server:
+  port: 9000
+spring:
+  application:
+    name: shop-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    gateway:
+      routes:
+        - id: product_route #跳转路由id
+          uri: lb://product-service #跳转URL地址:ip+端口, 如果写lb具有负载均衡逻辑
+          predicates:
+            - Path=/product-serv/** #配置当前路由拦截的请求路径规则,当前配置拦截规则,当前配置拦截规则: 拦截以/product-serv开头路径
+          filters:
+            - StripPrefix=1 #网关局部过滤器--对通过网关请求进行拦截与加工(不同过滤器有不同功能)当前:StringPrexfix=1 过滤器逻辑:截断URL路径第一节路径
+        - id: order_route
+          uri: lb://order-service
+          predicates:
+            - Path=/order-serv/**
+          filters:
+            - StripPrefix=1
+            - Time
+      discovery:
+        locator:
+          enabled: true # 让gateway可以发现nacos中的微服务
+
+          #1.请求进入网关,判断URL路径符合predicates设置规则, 如果符合就使用该路由进行处理
+          #当前符合 product_route
+          #2.执行路由的filters逻辑进行URL地址改造:当前路由过滤是截取第一节路径:/product-serv
+          #3.将处理完成之后的URL地址, 拼接到URI上, 得到完整微服务访问地址,然后跳转
+    sentinel:
+      transport:
+        port: 8719
+        ashboard: localhost:8080

@@ -1,0 +1,5 @@
+cn\wolfcode\controller\ProductController.class
+cn\wolfcode\mapper\ProductMapper.class
+cn\wolfcode\service\impl\ProductServiceImpl.class
+cn\wolfcode\service\IProductService.class
+cn\wolfcode\ProductServer.class

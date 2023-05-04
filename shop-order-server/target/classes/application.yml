@@ -1,0 +1,32 @@
+server:
+  port: 8091
+  tomcat:
+    threads:
+      max: 10 #tomcat的最大并发值修改为10,
+spring:
+  cloud:
+
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    sentinel:
+      web-context-unify: false
+      transport:
+        port: 8719 #跟控制台交流的端口,随意指定一个未使用的端口即可,默认为8719
+        dashboard: localhost:8080 # 指定控制台服务的地址
+  application:
+    name: order-service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/shop-parent?useUnicode=true&characterEncoding=utf8&nullCatalogMeansCurrent=true&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    username: root
+    password: admin
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000  #连接时间，单位毫秒
+        readTimeout: 5000     #操作时间
+product-service: # 调用的提供者的名称
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
